@@ -10,6 +10,9 @@ def calculate_stress_score(answers):
       (slot overwhelmed)
       (slot irritability)
       (slot tension)
+      (slot lonely)
+      (slot forgetful)
+      (slot unhealthy)
    )
    """)
 
@@ -19,6 +22,9 @@ def calculate_stress_score(answers):
       (slot cf1 (default 0.4))
       (slot cf2 (default 0.2))
       (slot cf3 (default 0.5))
+      (slot cf4 (default 0.1))
+      (slot cf5 (default 0.1))
+      (slot cf6 (default 0.1))
    )
    """)
 
@@ -32,11 +38,11 @@ def calculate_stress_score(answers):
    (defrule check-overwhelmed
       (symptoms (overwhelmed ?answer))
       ?cf <- (cf-values (cf1 ?cf1))
-      (not (fired-rules (symptom "overwhelmed")))          ;; Ensure the rule only fires once
+      (not (fired-rules (symptom "overwhelmed")))        ;; Ensure the rule only fires once
       =>
-      (bind ?cf-value (* (float ?answer) ?cf1))             ;; Multiply answer by CF value
+      (bind ?cf-value (* (float ?answer) ?cf1))          ;; Multiply answer by CF value
       (modify ?cf (cf1 ?cf-value))
-      (assert (fired-rules (symptom "overwhelmed")))       ;; Mark as processed
+      (assert (fired-rules (symptom "overwhelmed")))     ;; Mark as processed
    )
    """)
 
@@ -44,11 +50,11 @@ def calculate_stress_score(answers):
    (defrule check-irritability
       (symptoms (irritability ?answer))
       ?cf <- (cf-values (cf2 ?cf2))
-      (not (fired-rules (symptom "irritability")))      ;; Ensure the rule only fires once
+      (not (fired-rules (symptom "irritability")))       ;; Ensure the rule only fires once
       =>
-      (bind ?cf-value (* (float ?answer) ?cf2))             ;; Multiply answer by CF value
+      (bind ?cf-value (* (float ?answer) ?cf2))          ;; Multiply answer by CF value
       (modify ?cf (cf2 ?cf-value))
-      (assert (fired-rules (symptom "irritability")))   ;; Mark as processed
+      (assert (fired-rules (symptom "irritability")))    ;; Mark as processed
    )
    """)
 
@@ -56,20 +62,59 @@ def calculate_stress_score(answers):
    (defrule check-tension
       (symptoms (tension ?answer))
       ?cf <- (cf-values (cf3 ?cf3))
-      (not (fired-rules (symptom "tension")))         ;; Ensure the rule only fires once
+      (not (fired-rules (symptom "tension")))            ;; Ensure the rule only fires once
       =>
-      (bind ?cf-value (* (float ?answer) ?cf3))             ;; Multiply answer by CF value
+      (bind ?cf-value (* (float ?answer) ?cf3))          ;; Multiply answer by CF value
       (modify ?cf (cf3 ?cf-value))
-      (assert (fired-rules (symptom "tension")))      ;; Mark as processed
+      (assert (fired-rules (symptom "tension")))         ;; Mark as processed
+   )
+   """)
+
+   env.build("""
+   (defrule check-lonely
+      (symptoms (lonely ?answer))
+      ?cf <- (cf-values (cf4 ?cf4))
+      (not (fired-rules (symptom "lonely")))             ;; Ensure the rule only fires once
+      =>
+      (bind ?cf-value (* (float ?answer) ?cf4))          ;; Multiply answer by CF value
+      (modify ?cf (cf4 ?cf-value))
+      (assert (fired-rules (symptom "lonely")))          ;; Mark as processed
+   )
+   """)
+
+   env.build("""
+   (defrule check-forgetful
+      (symptoms (forgetful ?answer))
+      ?cf <- (cf-values (cf5 ?cf5))
+      (not (fired-rules (symptom "forgetful")))          ;; Ensure the rule only fires once
+      =>
+      (bind ?cf-value (* (float ?answer) ?cf5))          ;; Multiply answer by CF value
+      (modify ?cf (cf5 ?cf-value))
+      (assert (fired-rules (symptom "forgetful")))       ;; Mark as processed
+   )
+   """)
+
+   env.build("""
+   (defrule check-unhealthy
+      (symptoms (unhealthy ?answer))
+      ?cf <- (cf-values (cf6 ?cf6))
+      (not (fired-rules (symptom "unhealthy")))          ;; Ensure the rule only fires once
+      =>
+      (bind ?cf-value (* (float ?answer) ?cf6))          ;; Multiply answer by CF value
+      (modify ?cf (cf6 ?cf-value))
+      (assert (fired-rules (symptom "unhealthy")))       ;; Mark as processed
    )
    """)
 
    env.build("""
    (defrule final-check
-      (cf-values (cf1 ?cf1) (cf2 ?cf2) (cf3 ?cf3))
+      (cf-values (cf1 ?cf1) (cf2 ?cf2) (cf3 ?cf3) (cf4 ?cf4) (cf5 ?cf5) (cf6 ?cf6))
       =>
       (bind ?cf-old1 (+ ?cf1 (* ?cf2 (- 1 ?cf1))))
-      (bind ?cf-combined (+ ?cf-old1 (* ?cf3 (- 1 ?cf-old1))))
+      (bind ?cf-old2 (+ ?cf-old1 (* ?cf3 (- 1 ?cf-old1))))
+      (bind ?cf-old3 (+ ?cf-old2 (* ?cf4 (- 1 ?cf-old2))))
+      (bind ?cf-old4 (+ ?cf-old3 (* ?cf5 (- 1 ?cf-old3))))
+      (bind ?cf-combined (+ ?cf-old4 (* ?cf6 (- 1 ?cf-old4))))
       (if (<= ?cf-combined 0) then
          (assert (stress-level (cf-combined ?cf-combined) (level "No Stress")))
       else
@@ -102,7 +147,10 @@ def calculate_stress_score(answers):
    env.assert_string(f'(symptoms '
                      f'(overwhelmed {float(answers.get("overwhelmed"))}) '
                      f'(irritability {float(answers.get("irritability"))}) '
-                     f'(tension {float(answers.get("tension"))}))')
+                     f'(tension {float(answers.get("tension"))}) '
+                     f'(lonely {float(answers.get("lonely"))}) '
+                     f'(forgetful {float(answers.get("forgetful"))}) '
+                     f'(unhealthy {float(answers.get("unhealthy"))}))')
 
    env.run()
 

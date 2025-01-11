@@ -1,10 +1,10 @@
-from flask import render_template, request, redirect, url_for, session
 from app import app
 from app.depression import calculate_depression_score
 from app.anxiety import calculate_anxiety_score
 from app.stress import calculate_stress_score
+from flask import render_template, request, redirect, url_for, session
 
-app.secret_key = "S3CR3T"
+app.secret_key = "MentalAccess"
 
 @app.route('/')
 def home():
@@ -34,6 +34,9 @@ def stress():
         session['overwhelmed'] = request.form.get('overwhelmed')
         session['irritability'] = request.form.get('irritability')
         session['tension'] = request.form.get('tension')
+        session['lonely'] = request.form.get('lonely')
+        session['forgetful'] = request.form.get('forgetful')
+        session['unhealthy'] = request.form.get('unhealthy')
         return redirect(url_for('result'))
     return render_template('stress.php')
 
