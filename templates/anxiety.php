@@ -12,16 +12,28 @@
 
     <form action="/anxiety" method="post">
         <label>Do you feel nervous frequently?</label><br>
-        <input type="radio" name="nervousness" value="yes" required> Yes<br>
-        <input type="radio" name="nervousness" value="no" required> No<br><br>
+        <input type="radio" name="nervousness" value="0.0" required> Never<br>
+        <input type="radio" name="nervousness" value="0.2" required> Rarely<br>
+        <input type="radio" name="nervousness" value="0.4" required> Sometimes<br>
+        <input type="radio" name="nervousness" value="0.6" required> Often<br>
+        <input type="radio" name="nervousness" value="0.8" required> Very often<br>
+        <input type="radio" name="nervousness" value="1.0" required> Always<br><br>
 
         <label>Do you feel restless or uneasy?</label><br>
-        <input type="radio" name="restlessness" value="yes" required> Yes<br>
-        <input type="radio" name="restlessness" value="no" required> No<br><br>
+        <input type="radio" name="restlessness" value="0.0" required> Never<br>
+        <input type="radio" name="restlessness" value="0.2" required> Rarely<br>
+        <input type="radio" name="restlessness" value="0.4" required> Sometimes<br>
+        <input type="radio" name="restlessness" value="0.6" required> Often<br>
+        <input type="radio" name="restlessness" value="0.8" required> Very often<br>
+        <input type="radio" name="restlessness" value="1.0" required> Always<br><br>
 
         <label>Do you feel tense or unable to relax?</label><br>
-        <input type="radio" name="tenseness" value="yes" required> Yes<br>
-        <input type="radio" name="tenseness" value="no" required> No<br><br>
+        <input type="radio" name="tenseness" value="0.0" required> Never<br>
+        <input type="radio" name="tenseness" value="0.2" required> Rarely<br>
+        <input type="radio" name="tenseness" value="0.4" required> Sometimes<br>
+        <input type="radio" name="tenseness" value="0.6" required> Often<br>
+        <input type="radio" name="tenseness" value="0.8" required> Very often<br>
+        <input type="radio" name="tenseness" value="1.0" required> Always<br><br>
 
         <button type="submit">Next</button>
     </form>

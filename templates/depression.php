@@ -12,16 +12,28 @@
 
     <form action="/depression" method="post">
         <label>Do you have sleep issues?</label><br>
-        <input type="radio" name="sleep_issues" value="yes" required> Yes<br>
-        <input type="radio" name="sleep_issues" value="no" required> No<br><br>
+        <input type="radio" name="sleep_issues" value="0.0" required> Never<br>
+        <input type="radio" name="sleep_issues" value="0.2" required> Rarely<br>
+        <input type="radio" name="sleep_issues" value="0.4" required> Sometimes<br>
+        <input type="radio" name="sleep_issues" value="0.6" required> Often<br>
+        <input type="radio" name="sleep_issues" value="0.8" required> Very often<br>
+        <input type="radio" name="sleep_issues" value="1.0" required> Always<br><br>
 
         <label>Have you experienced appetite changes?</label><br>
-        <input type="radio" name="appetite_changes" value="yes" required> Yes<br>
-        <input type="radio" name="appetite_changes" value="no" required> No<br><br>
+        <input type="radio" name="appetite_changes" value="0.0" required> Never<br>
+        <input type="radio" name="appetite_changes" value="0.2" required> Rarely<br>
+        <input type="radio" name="appetite_changes" value="0.4" required> Sometimes<br>
+        <input type="radio" name="appetite_changes" value="0.6" required> Often<br>
+        <input type="radio" name="appetite_changes" value="0.8" required> Very often<br>
+        <input type="radio" name="appetite_changes" value="1.0" required> Always<br><br>
 
         <label>Are you having trouble concentrating?</label><br>
-        <input type="radio" name="concentration" value="yes" required> Yes<br>
-        <input type="radio" name="concentration" value="no" required> No<br><br>
+        <input type="radio" name="concentration" value="0.0" required> Never<br>
+        <input type="radio" name="concentration" value="0.2" required> Rarely<br>
+        <input type="radio" name="concentration" value="0.4" required> Sometimes<br>
+        <input type="radio" name="concentration" value="0.6" required> Often<br>
+        <input type="radio" name="concentration" value="0.8" required> Very often<br>
+        <input type="radio" name="concentration" value="1.0" required> Always<br><br>
 
         <button type="submit">Next</button>
     </form>
