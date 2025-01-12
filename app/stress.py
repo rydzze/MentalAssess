@@ -19,12 +19,12 @@ def calculate_stress_score(answers):
    # Define the CF values template
    env.build("""
    (deftemplate cf-values
-      (slot cf1 (default 0.4))
-      (slot cf2 (default 0.2))
-      (slot cf3 (default 0.5))
-      (slot cf4 (default 0.1))
-      (slot cf5 (default 0.1))
-      (slot cf6 (default 0.1))
+      (slot cf1 (default 0.8))
+      (slot cf2 (default 0.6))
+      (slot cf3 (default 0.7))
+      (slot cf4 (default 0.5))
+      (slot cf5 (default 0.4))
+      (slot cf6 (default 0.5))
    )
    """)
 
