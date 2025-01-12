@@ -58,22 +58,6 @@
         <input type="radio" name="unhealthy" value="0.6" required> Often<br>
         <input type="radio" name="unhealthy" value="0.8" required> Very often<br>
         <input type="radio" name="unhealthy" value="1.0" required> Always<br><br>
-
-        <label>Felt that you were unable to control important things in your life?</label><br>
-        <input type="radio" name="uncontrolled" value="yes" required> Yes<br>
-        <input type="radio" name="uncontrolled" value="no" required> No<br><br>
-
-        <label>On a scale of 1 to 10, how would you rate your work stress level?</label><br>
-        <input type="radio" name="stressful" value="yes" required> Yes<br>
-        <input type="radio" name="stressful" value="no" required> No<br><br>
-
-        <label>How much have you noticed a decrease in your personal productivity?</label><br>
-        <input type="radio" name="lost_interest" value="yes" required> Yes<br>
-        <input type="radio" name="lost_interest" value="no" required> No<br><br>
-
-        <label>how sensitive are you to noise or distractions?</label><br>
-        <input type="radio" name="sensitive" value="yes" required> Yes<br>
-        <input type="radio" name="sensitive" value="no" required> No<br><br>
         
         <button type="submit">See Results</button>
     </form>
