@@ -11,7 +11,7 @@
     <h1>Step 1: Depression</h1>
 
     <form action="/depression" method="post">
-        <label>How often have you had trouble sleeping over the last two weeks?</label><br>
+        <label>How often have you had trouble sleeping over the past two weeks?</label><br>
         <input type="radio" name="sleep_issues" value="0.0" required> Never<br>
         <input type="radio" name="sleep_issues" value="0.2" required> Rarely<br>
         <input type="radio" name="sleep_issues" value="0.4" required> Sometimes<br>
