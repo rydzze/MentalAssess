@@ -14,8 +14,11 @@ def home():
 def depression():
     if request.method == 'POST':
         session['sleep_issues'] = request.form.get('sleep_issues')
-        session['appetite_changes'] = request.form.get('appetite_changes')
+        session['energy'] = request.form.get('energy')
+        session['appetite'] = request.form.get('appetite')
         session['concentration'] = request.form.get('concentration')
+        session['behaviour'] = request.form.get('behaviour')
+        session['emotion'] = request.form.get('emotion')
         return redirect(url_for('anxiety'))
     return render_template('depression.php')
 
