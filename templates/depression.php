@@ -51,13 +51,13 @@
         <input type="radio" name="behaviour" value="0.8" required> Very often<br>
         <input type="radio" name="behaviour" value="1.0" required> Always<br><br>
 
-        <label>Can you rate how much you wanted to be alone in past two weeks?</label><br>
-        <input type="radio" name="social_isolation" value="0.0" required> Never<br>
-        <input type="radio" name="social_isolation" value="0.2" required> Rarely<br>
-        <input type="radio" name="social_isolation" value="0.4" required> Sometimes<br>
-        <input type="radio" name="social_isolation" value="0.6" required> Often<br>
-        <input type="radio" name="social_isolation" value="0.8" required> Very often<br>
-        <input type="radio" name="social_isolation" value="1.0" required> Always<br><br>
+        <label>Can you rate how much you felt sad in the past two weeks?</label><br>
+        <input type="radio" name="emotion" value="0.0" required> Never<br>
+        <input type="radio" name="emotion" value="0.2" required> Rarely<br>
+        <input type="radio" name="emotion" value="0.4" required> Sometimes<br>
+        <input type="radio" name="emotion" value="0.6" required> Often<br>
+        <input type="radio" name="emotion" value="0.8" required> Very often<br>
+        <input type="radio" name="emotion" value="1.0" required> Always<br><br>
 
         <button type="submit">Next</button>
     </form>
