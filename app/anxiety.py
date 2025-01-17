@@ -10,6 +10,9 @@ def calculate_anxiety_score(answers):
       (slot nervousness)
       (slot restlessness)
       (slot tenseness)
+      (slot panicky)
+      (slot overthinking)
+      (slot headache)
    )
    """)
 
@@ -19,6 +22,9 @@ def calculate_anxiety_score(answers):
       (slot cf1 (default 0.4))
       (slot cf2 (default 0.2))
       (slot cf3 (default 0.5))
+      (slot cf4 (default 0.3))
+      (slot cf5 (default 0.4))
+      (slot cf6 (default 0.35))
    )
    """)
 
@@ -65,11 +71,50 @@ def calculate_anxiety_score(answers):
    """)
 
    env.build("""
+   (defrule check-panicky
+      (symptoms (panicky ?answer))
+      ?cf <- (cf-values (cf4 ?cf4))
+      (not (fired-rules (symptom "panicky")))        ;; Ensure the rule only fires once
+      =>
+      (bind ?cf-value (* (float ?answer) ?cf4))          ;; Multiply answer by CF value
+      (modify ?cf (cf4 ?cf-value))
+      (assert (fired-rules (symptom "panicky")))     ;; Mark as processed
+   )
+   """)
+
+   env.build("""
+   (defrule check-overthinking
+      (symptoms (overthinking ?answer))
+      ?cf <- (cf-values (cf5 ?cf5))
+      (not (fired-rules (symptom "overthinking")))        ;; Ensure the rule only fires once
+      =>
+      (bind ?cf-value (* (float ?answer) ?cf5))          ;; Multiply answer by CF value
+      (modify ?cf (cf5 ?cf-value))
+      (assert (fired-rules (symptom "overthinking")))     ;; Mark as processed
+   )
+   """)
+
+   env.build("""
+   (defrule check-headache
+      (symptoms (headache ?answer))
+      ?cf <- (cf-values (cf6 ?cf6))
+      (not (fired-rules (symptom "headache")))        ;; Ensure the rule only fires once
+      =>
+      (bind ?cf-value (* (float ?answer) ?cf6))          ;; Multiply answer by CF value
+      (modify ?cf (cf6 ?cf-value))
+      (assert (fired-rules (symptom "headache")))     ;; Mark as processed
+   )
+   """)
+
+   env.build("""
    (defrule final-check
-      (cf-values (cf1 ?cf1) (cf2 ?cf2) (cf3 ?cf3))
+      (cf-values (cf1 ?cf1) (cf2 ?cf2) (cf3 ?cf3) (cf4 ?cf4) (cf5 ?cf5) (cf6 ?cf6))
       =>
       (bind ?cf-old1 (+ ?cf1 (* ?cf2 (- 1 ?cf1))))
-      (bind ?cf-combined (+ ?cf-old1 (* ?cf3 (- 1 ?cf-old1))))
+      (bind ?cf-old2 (+ ?cf-old1 (* ?cf3 (- 1 ?cf-old1))))
+      (bind ?cf-old3 (+ ?cf-old2 (* ?cf4 (- 1 ?cf-old2))))
+      (bind ?cf-old4 (+ ?cf-old3 (* ?cf5 (- 1 ?cf-old3))))
+      (bind ?cf-combined (+ ?cf-old4 (* ?cf6 (- 1 ?cf-old4))))
       (if (<= ?cf-combined 0) then
          (assert (anxiety-level (cf-combined ?cf-combined) (level "No Anxiety")))
       else
@@ -102,7 +147,10 @@ def calculate_anxiety_score(answers):
    env.assert_string(f'(symptoms '
                      f'(nervousness {float(answers.get("nervousness"))}) '
                      f'(restlessness {float(answers.get("restlessness"))}) '
-                     f'(tenseness {float(answers.get("tenseness"))}))')
+                     f'(tenseness {float(answers.get("tenseness"))}) '
+                     f'(panicky {float(answers.get("panicky"))}) '
+                     f'(overthinking {float(answers.get("overthinking"))}) '
+                     f'(headache {float(answers.get("headache"))}))')
 
    env.run()
 
