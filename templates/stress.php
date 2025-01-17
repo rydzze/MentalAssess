@@ -35,13 +35,13 @@
         <input type="radio" name="tension" value="0.8" required> Very often<br>
         <input type="radio" name="tension" value="1.0" required> Always<br><br>
 
-        <label>Do you feel lonely or isolated?</label><br>
-        <input type="radio" name="lonely" value="0.0" required> Never<br>
-        <input type="radio" name="lonely" value="0.2" required> Rarely<br>
-        <input type="radio" name="lonely" value="0.4" required> Sometimes<br>
-        <input type="radio" name="lonely" value="0.6" required> Often<br>
-        <input type="radio" name="lonely" value="0.8" required> Very often<br>
-        <input type="radio" name="lonely" value="1.0" required> Always<br><br>
+        <label>Do you felt difficult to keep yourself calm?</label><br>
+        <input type="radio" name="calm" value="0.0" required> Never<br>
+        <input type="radio" name="calm" value="0.2" required> Rarely<br>
+        <input type="radio" name="calm" value="0.4" required> Sometimes<br>
+        <input type="radio" name="calm" value="0.6" required> Often<br>
+        <input type="radio" name="calm" value="0.8" required> Very often<br>
+        <input type="radio" name="calm" value="1.0" required> Always<br><br>
 
         <label>Do you experience memory problems or difficulty making decisions?</label><br>
         <input type="radio" name="forgetful" value="0.0" required> Never<br>
@@ -51,13 +51,13 @@
         <input type="radio" name="forgetful" value="0.8" required> Very often<br>
         <input type="radio" name="forgetful" value="1.0" required> Always<br><br>
 
-        <label>Do you engage in unhealthy coping mechanisms (e.g., excessive alcohol or drug use)?</label><br>
-        <input type="radio" name="unhealthy" value="0.0" required> Never<br>
-        <input type="radio" name="unhealthy" value="0.2" required> Rarely<br>
-        <input type="radio" name="unhealthy" value="0.4" required> Sometimes<br>
-        <input type="radio" name="unhealthy" value="0.6" required> Often<br>
-        <input type="radio" name="unhealthy" value="0.8" required> Very often<br>
-        <input type="radio" name="unhealthy" value="1.0" required> Always<br><br>
+        <label>Do you found yourself sensitive to noise or distractions?</label><br>
+        <input type="radio" name="sensitive" value="0.0" required> Never<br>
+        <input type="radio" name="sensitive" value="0.2" required> Rarely<br>
+        <input type="radio" name="sensitive" value="0.4" required> Sometimes<br>
+        <input type="radio" name="sensitive" value="0.6" required> Often<br>
+        <input type="radio" name="sensitive" value="0.8" required> Very often<br>
+        <input type="radio" name="sensitive" value="1.0" required> Always<br><br>
         
         <button type="submit">See Results</button>
     </form>

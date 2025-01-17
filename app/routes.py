@@ -37,9 +37,9 @@ def stress():
         session['overwhelmed'] = request.form.get('overwhelmed')
         session['irritability'] = request.form.get('irritability')
         session['tension'] = request.form.get('tension')
-        session['lonely'] = request.form.get('lonely')
+        session['calm'] = request.form.get('calm')
         session['forgetful'] = request.form.get('forgetful')
-        session['unhealthy'] = request.form.get('unhealthy')
+        session['sensitive'] = request.form.get('sensitive')
         return redirect(url_for('result'))
     return render_template('stress.php')
 

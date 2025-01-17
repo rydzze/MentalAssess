@@ -10,9 +10,9 @@ def calculate_stress_score(answers):
       (slot overwhelmed)
       (slot irritability)
       (slot tension)
-      (slot lonely)
+      (slot calm)
       (slot forgetful)
-      (slot unhealthy)
+      (slot sensitive)
    )
    """)
 
@@ -71,14 +71,14 @@ def calculate_stress_score(answers):
    """)
 
    env.build("""
-   (defrule check-lonely
-      (symptoms (lonely ?answer))
+   (defrule check-calm
+      (symptoms (calm ?answer))
       ?cf <- (cf-values (cf4 ?cf4))
-      (not (fired-rules (symptom "lonely")))             ;; Ensure the rule only fires once
+      (not (fired-rules (symptom "calm")))               ;; Ensure the rule only fires once
       =>
       (bind ?cf-value (* (float ?answer) ?cf4))          ;; Multiply answer by CF value
       (modify ?cf (cf4 ?cf-value))
-      (assert (fired-rules (symptom "lonely")))          ;; Mark as processed
+      (assert (fired-rules (symptom "calm")))            ;; Mark as processed
    )
    """)
 
@@ -95,14 +95,14 @@ def calculate_stress_score(answers):
    """)
 
    env.build("""
-   (defrule check-unhealthy
-      (symptoms (unhealthy ?answer))
+   (defrule check-sensitive
+      (symptoms (sensitive ?answer))
       ?cf <- (cf-values (cf6 ?cf6))
-      (not (fired-rules (symptom "unhealthy")))          ;; Ensure the rule only fires once
+      (not (fired-rules (symptom "sensitive")))          ;; Ensure the rule only fires once
       =>
       (bind ?cf-value (* (float ?answer) ?cf6))          ;; Multiply answer by CF value
       (modify ?cf (cf6 ?cf-value))
-      (assert (fired-rules (symptom "unhealthy")))       ;; Mark as processed
+      (assert (fired-rules (symptom "sensitive")))       ;; Mark as processed
    )
    """)
 
