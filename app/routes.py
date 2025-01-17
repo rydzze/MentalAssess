@@ -28,6 +28,9 @@ def anxiety():
         session['nervousness'] = request.form.get('nervousness')
         session['restlessness'] = request.form.get('restlessness')
         session['tenseness'] = request.form.get('tenseness')
+        session['panicky'] = request.form.get('panicky')
+        session['overthinking'] = request.form.get('overthinking')
+        session['headache'] = request.form.get('headache')
         return redirect(url_for('stress'))
     return render_template('anxiety.php')
 
