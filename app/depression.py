@@ -156,9 +156,9 @@ def calculate_depression_score(answers):
                      f'(sleep_issues {float(answers.get("sleep_issues"))}) '
                      f'(energy {float(answers.get("energy"))}) '
                      f'(appetite {float(answers.get("appetite"))}) '
-                     f'(concentration {float(answers.get("concentration"))}))'
+                     f'(concentration {float(answers.get("concentration"))}) '
                      f'(behaviour {float(answers.get("behaviour"))}) '
-                     f'(emotion {float(answers.get("emotion"))}) ')
+                     f'(emotion {float(answers.get("emotion"))}))')
 
    env.run()
 

@@ -52,12 +52,12 @@
         <input type="radio" name="panicky" value="1.0" required> Always<br><br>
 
         <label>Do you find yourself overthinking or dwelling on things that might go wrong?</label><br>
-        <input type="radio" name="overthinkingness" value="0.0" required> Never<br>
-        <input type="radio" name="overthinkingness" value="0.2" required> Rarely<br>
-        <input type="radio" name="overthinkingness" value="0.4" required> Sometimes<br>
-        <input type="radio" name="overthinkingness" value="0.6" required> Often<br>
-        <input type="radio" name="overthinkingness" value="0.8" required> Very often<br>
-        <input type="radio" name="overthinkingness" value="1.0" required> Always<br><br>
+        <input type="radio" name="overthinking" value="0.0" required> Never<br>
+        <input type="radio" name="overthinking" value="0.2" required> Rarely<br>
+        <input type="radio" name="overthinking" value="0.4" required> Sometimes<br>
+        <input type="radio" name="overthinking" value="0.6" required> Often<br>
+        <input type="radio" name="overthinking" value="0.8" required> Very often<br>
+        <input type="radio" name="overthinking" value="1.0" required> Always<br><br>
 
         <button type="submit">Next</button>
     </form>

@@ -156,9 +156,9 @@ def calculate_stress_score(answers):
                      f'(overwhelmed {float(answers.get("overwhelmed"))}) '
                      f'(irritability {float(answers.get("irritability"))}) '
                      f'(tension {float(answers.get("tension"))}) '
-                     f'(lonely {float(answers.get("lonely"))}) '
+                     f'(calm {float(answers.get("calm"))}) '
                      f'(forgetful {float(answers.get("forgetful"))}) '
-                     f'(unhealthy {float(answers.get("unhealthy"))}))')
+                     f'(sensitive {float(answers.get("sensitive"))}))')
 
    env.run()
 
