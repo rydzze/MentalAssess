@@ -30,7 +30,7 @@ def anxiety():
         session['tenseness'] = request.form.get('tenseness')
         session['panicky'] = request.form.get('panicky')
         session['overthinking'] = request.form.get('overthinking')
-        session['headache'] = request.form.get('headache')
+        session['shortbreath'] = request.form.get('shortbreath')
         return redirect(url_for('stress'))
     return render_template('anxiety.html')
 

@@ -12,7 +12,7 @@ def calculate_anxiety_score(answers):
       (slot tenseness)
       (slot panicky)
       (slot overthinking)
-      (slot headache)
+      (slot shortbreath)
    )
    """)
 
@@ -20,11 +20,11 @@ def calculate_anxiety_score(answers):
    env.build("""
    (deftemplate cf-values
       (slot cf1 (default 0.7))
-      (slot cf2 (default 0.3))
+      (slot cf2 (default 0.2))
       (slot cf3 (default 0.6))
-      (slot cf4 (default 0.2))
-      (slot cf5 (default 0.4))
-      (slot cf6 (default 0.8))
+      (slot cf4 (default 0.4))
+      (slot cf5 (default 0.8))
+      (slot cf6 (default 0.3))
    )
    """)
 
@@ -75,7 +75,7 @@ def calculate_anxiety_score(answers):
    )
    """)
 
-   # Do you often experience headaches?
+   # Do you experience sudden feelings of panic or fear without an obvious reason?
    env.build("""
    (defrule check-panicky
       (symptoms (panicky ?answer))
@@ -88,7 +88,7 @@ def calculate_anxiety_score(answers):
    )
    """)
 
-   # Do you experience sudden feelings of panic or fear without an obvious reason?
+   # Do you find yourself overthinking or dwelling on things that might go wrong?
    env.build("""
    (defrule check-overthinking
       (symptoms (overthinking ?answer))
@@ -101,16 +101,16 @@ def calculate_anxiety_score(answers):
    )
    """)
 
-   # Do you find yourself overthinking or dwelling on things that might go wrong?
+   # Have you ever experienced shortness of breath lately?
    env.build("""
-   (defrule check-headache
-      (symptoms (headache ?answer))
+   (defrule check-shortbreath
+      (symptoms (shortbreath ?answer))
       ?cf <- (cf-values (cf6 ?cf6))
-      (not (fired-rules (symptom "headache")))           ;; Ensure the rule only fires once
+      (not (fired-rules (symptom "shortbreath")))        ;; Ensure the rule only fires once
       =>
       (bind ?cf-value (* (float ?answer) ?cf6))          ;; Multiply answer by CF value
       (modify ?cf (cf6 ?cf-value))
-      (assert (fired-rules (symptom "headache")))        ;; Mark as fired
+      (assert (fired-rules (symptom "shortbreath")))     ;; Mark as fired
    )
    """)
 
@@ -158,7 +158,7 @@ def calculate_anxiety_score(answers):
                      f'(tenseness {float(answers.get("tenseness"))}) '
                      f'(panicky {float(answers.get("panicky"))}) '
                      f'(overthinking {float(answers.get("overthinking"))}) '
-                     f'(headache {float(answers.get("headache"))}))')
+                     f'(shortbreath {float(answers.get("shortbreath"))}))')
 
    env.run()
 
