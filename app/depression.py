@@ -16,24 +16,27 @@ def calculate_depression_score(answers):
    )
    """)
 
-   # Define the CF values template
+   # Define the CF values template - store the CF values for each symptom
    env.build("""
    (deftemplate cf-values
       (slot cf1 (default 0.1))
       (slot cf2 (default 0.8))
-      (slot cf3 (default 0.7))
-      (slot cf4 (default 0.5))
-      (slot cf5 (default 0.2))
+      (slot cf3 (default 0.6))
+      (slot cf4 (default 0.4))
+      (slot cf5 (default 0.3))
       (slot cf6 (default 1.0))
    )
    """)
 
+   # Define the fired rules template - track rules that have fired, avoid re-firing
    env.build("""(deftemplate fired-rules (slot symptom))""")
 
+   # Define the depression level template - store the severity level and combined CF values for return value
    env.build("""(deftemplate depression-level (slot level) (slot cf-combined))""")
 
    env.assert_string("(cf-values)")
 
+   # # How often have you had trouble sleeping over the past two weeks?
    env.build("""
    (defrule check-sleep-issues
       (symptoms (sleep_issues ?answer))
@@ -42,10 +45,11 @@ def calculate_depression_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf1))             ;; Multiply answer by CF value
       (modify ?cf (cf1 ?cf-value))
-      (assert (fired-rules (symptom "sleep_issues")))       ;; Mark as processed
+      (assert (fired-rules (symptom "sleep_issues")))       ;; Mark as fired
    )
    """)
 
+   # How much have you felt a lack of energy over the last two weeks?
    env.build("""
    (defrule check-energy
       (symptoms (energy ?answer))
@@ -54,10 +58,11 @@ def calculate_depression_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf2))             ;; Multiply answer by CF value
       (modify ?cf (cf2 ?cf-value))
-      (assert (fired-rules (symptom "energy")))             ;; Mark as processed
+      (assert (fired-rules (symptom "energy")))             ;; Mark as fired
    )
    """)
 
+   # How much have you noticed changes in your appetite over the last two weeks?
    env.build("""
    (defrule check-appetite
       (symptoms (appetite ?answer))
@@ -66,10 +71,11 @@ def calculate_depression_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf3))             ;; Multiply answer by CF value
       (modify ?cf (cf3 ?cf-value))
-      (assert (fired-rules (symptom "appetite")))           ;; Mark as processed
+      (assert (fired-rules (symptom "appetite")))           ;; Mark as fired
    )
    """)
 
+   # To what extent have you had difficulty concentrating over the last two weeks?
    env.build("""
    (defrule check-concentration
       (symptoms (concentration ?answer))
@@ -78,10 +84,11 @@ def calculate_depression_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf4))             ;; Multiply answer by CF value
       (modify ?cf (cf4 ?cf-value))
-      (assert (fired-rules (symptom "concentration")))      ;; Mark as processed
+      (assert (fired-rules (symptom "concentration")))      ;; Mark as fired
    )
    """)
 
+   # How much have you felt passive or lacked motivation to engage in activities over the last two weeks?
    env.build("""
    (defrule check-behaviour
       (symptoms (behaviour ?answer))
@@ -90,10 +97,11 @@ def calculate_depression_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf5))             ;; Multiply answer by CF value
       (modify ?cf (cf5 ?cf-value))
-      (assert (fired-rules (symptom "behaviour")))          ;; Mark as processed
+      (assert (fired-rules (symptom "behaviour")))          ;; Mark as fired
    )
    """)
 
+   # Can you rate how much you felt sad in the past two weeks?
    env.build("""
    (defrule check-emotion
       (symptoms (emotion ?answer))
@@ -102,7 +110,7 @@ def calculate_depression_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf6))             ;; Multiply answer by CF value
       (modify ?cf (cf6 ?cf-value))
-      (assert (fired-rules (symptom "emotion")))            ;; Mark as processed
+      (assert (fired-rules (symptom "emotion")))            ;; Mark as fired
    )
    """)
 

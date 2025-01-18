@@ -16,24 +16,27 @@ def calculate_anxiety_score(answers):
    )
    """)
 
-   # Define the CF values template
+   # Define the CF values template - store the CF values for each symptom
    env.build("""
    (deftemplate cf-values
-      (slot cf1 (default 0.4))
-      (slot cf2 (default 0.2))
-      (slot cf3 (default 0.5))
-      (slot cf4 (default 0.3))
+      (slot cf1 (default 0.7))
+      (slot cf2 (default 0.3))
+      (slot cf3 (default 0.6))
+      (slot cf4 (default 0.2))
       (slot cf5 (default 0.4))
-      (slot cf6 (default 0.35))
+      (slot cf6 (default 0.8))
    )
    """)
 
+   # Define the fired rules template - track rules that have fired, avoid re-firing
    env.build("""(deftemplate fired-rules (slot symptom))""")
 
+   # Define the depression level template - store the severity level and combined CF values for return value
    env.build("""(deftemplate anxiety-level (slot level) (slot cf-combined))""")
 
    env.assert_string("(cf-values)")
 
+   # Do you feel nervous frequently?
    env.build("""
    (defrule check-nervousness
       (symptoms (nervousness ?answer))
@@ -42,10 +45,11 @@ def calculate_anxiety_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf1))          ;; Multiply answer by CF value
       (modify ?cf (cf1 ?cf-value))
-      (assert (fired-rules (symptom "nervousness")))     ;; Mark as processed
+      (assert (fired-rules (symptom "nervousness")))     ;; Mark as fired
    )
    """)
 
+   # Do you feel restless or uneasy?
    env.build("""
    (defrule check-restlessness
       (symptoms (restlessness ?answer))
@@ -54,10 +58,11 @@ def calculate_anxiety_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf2))          ;; Multiply answer by CF value
       (modify ?cf (cf2 ?cf-value))
-      (assert (fired-rules (symptom "restlessness")))    ;; Mark as processed
+      (assert (fired-rules (symptom "restlessness")))    ;; Mark as fired
    )
    """)
 
+   # Do you feel tense or unable to relax?
    env.build("""
    (defrule check-tenseness
       (symptoms (tenseness ?answer))
@@ -66,43 +71,46 @@ def calculate_anxiety_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf3))          ;; Multiply answer by CF value
       (modify ?cf (cf3 ?cf-value))
-      (assert (fired-rules (symptom "tenseness")))       ;; Mark as processed
+      (assert (fired-rules (symptom "tenseness")))       ;; Mark as fired
    )
    """)
 
+   # Do you often experience headaches?
    env.build("""
    (defrule check-panicky
       (symptoms (panicky ?answer))
       ?cf <- (cf-values (cf4 ?cf4))
-      (not (fired-rules (symptom "panicky")))        ;; Ensure the rule only fires once
+      (not (fired-rules (symptom "panicky")))            ;; Ensure the rule only fires once
       =>
       (bind ?cf-value (* (float ?answer) ?cf4))          ;; Multiply answer by CF value
       (modify ?cf (cf4 ?cf-value))
-      (assert (fired-rules (symptom "panicky")))     ;; Mark as processed
+      (assert (fired-rules (symptom "panicky")))         ;; Mark as fired
    )
    """)
 
+   # Do you experience sudden feelings of panic or fear without an obvious reason?
    env.build("""
    (defrule check-overthinking
       (symptoms (overthinking ?answer))
       ?cf <- (cf-values (cf5 ?cf5))
-      (not (fired-rules (symptom "overthinking")))        ;; Ensure the rule only fires once
+      (not (fired-rules (symptom "overthinking")))       ;; Ensure the rule only fires once
       =>
       (bind ?cf-value (* (float ?answer) ?cf5))          ;; Multiply answer by CF value
       (modify ?cf (cf5 ?cf-value))
-      (assert (fired-rules (symptom "overthinking")))     ;; Mark as processed
+      (assert (fired-rules (symptom "overthinking")))    ;; Mark as fired
    )
    """)
 
+   # Do you find yourself overthinking or dwelling on things that might go wrong?
    env.build("""
    (defrule check-headache
       (symptoms (headache ?answer))
       ?cf <- (cf-values (cf6 ?cf6))
-      (not (fired-rules (symptom "headache")))        ;; Ensure the rule only fires once
+      (not (fired-rules (symptom "headache")))           ;; Ensure the rule only fires once
       =>
       (bind ?cf-value (* (float ?answer) ?cf6))          ;; Multiply answer by CF value
       (modify ?cf (cf6 ?cf-value))
-      (assert (fired-rules (symptom "headache")))     ;; Mark as processed
+      (assert (fired-rules (symptom "headache")))        ;; Mark as fired
    )
    """)
 

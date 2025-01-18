@@ -16,24 +16,27 @@ def calculate_stress_score(answers):
    )
    """)
 
-   # Define the CF values template
+   # Define the CF values template - store the CF values for each symptom
    env.build("""
    (deftemplate cf-values
-      (slot cf1 (default 0.8))
+      (slot cf1 (default 0.9))
       (slot cf2 (default 0.6))
       (slot cf3 (default 0.7))
-      (slot cf4 (default 0.5))
-      (slot cf5 (default 0.4))
-      (slot cf6 (default 0.5))
+      (slot cf4 (default 0.3))
+      (slot cf5 (default 0.2))
+      (slot cf6 (default 0.4))
    )
    """)
 
+   # Define the fired rules template - track rules that have fired, avoid re-firing
    env.build("""(deftemplate fired-rules (slot symptom))""")
 
+   # Define the depression level template - store the severity level and combined CF values for return value
    env.build("""(deftemplate stress-level (slot level) (slot cf-combined))""")
 
    env.assert_string("(cf-values)")
 
+   # Do you feel overwhelmed frequently?
    env.build("""
    (defrule check-overwhelmed
       (symptoms (overwhelmed ?answer))
@@ -42,10 +45,11 @@ def calculate_stress_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf1))          ;; Multiply answer by CF value
       (modify ?cf (cf1 ?cf-value))
-      (assert (fired-rules (symptom "overwhelmed")))     ;; Mark as processed
+      (assert (fired-rules (symptom "overwhelmed")))     ;; Mark as fired
    )
    """)
 
+   # Do you feel irritable or impatient often?
    env.build("""
    (defrule check-irritability
       (symptoms (irritability ?answer))
@@ -54,10 +58,11 @@ def calculate_stress_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf2))          ;; Multiply answer by CF value
       (modify ?cf (cf2 ?cf-value))
-      (assert (fired-rules (symptom "irritability")))    ;; Mark as processed
+      (assert (fired-rules (symptom "irritability")))    ;; Mark as fired
    )
    """)
 
+   # Do you experience headaches or physical tension?
    env.build("""
    (defrule check-tension
       (symptoms (tension ?answer))
@@ -66,10 +71,11 @@ def calculate_stress_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf3))          ;; Multiply answer by CF value
       (modify ?cf (cf3 ?cf-value))
-      (assert (fired-rules (symptom "tension")))         ;; Mark as processed
+      (assert (fired-rules (symptom "tension")))         ;; Mark as fired
    )
    """)
 
+   # Do you felt difficult to keep yourself calm?
    env.build("""
    (defrule check-calm
       (symptoms (calm ?answer))
@@ -78,10 +84,11 @@ def calculate_stress_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf4))          ;; Multiply answer by CF value
       (modify ?cf (cf4 ?cf-value))
-      (assert (fired-rules (symptom "calm")))            ;; Mark as processed
+      (assert (fired-rules (symptom "calm")))            ;; Mark as fired
    )
    """)
 
+   # Do you experience memory problems or difficulty making decisions?
    env.build("""
    (defrule check-forgetful
       (symptoms (forgetful ?answer))
@@ -90,10 +97,11 @@ def calculate_stress_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf5))          ;; Multiply answer by CF value
       (modify ?cf (cf5 ?cf-value))
-      (assert (fired-rules (symptom "forgetful")))       ;; Mark as processed
+      (assert (fired-rules (symptom "forgetful")))       ;; Mark as fired
    )
    """)
 
+   # Do you found yourself sensitive to noise or distractions?
    env.build("""
    (defrule check-sensitive
       (symptoms (sensitive ?answer))
@@ -102,7 +110,7 @@ def calculate_stress_score(answers):
       =>
       (bind ?cf-value (* (float ?answer) ?cf6))          ;; Multiply answer by CF value
       (modify ?cf (cf6 ?cf-value))
-      (assert (fired-rules (symptom "sensitive")))       ;; Mark as processed
+      (assert (fired-rules (symptom "sensitive")))       ;; Mark as fired
    )
    """)
 
