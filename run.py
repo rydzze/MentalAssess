@@ -1,10 +1,24 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask_mail import Mail, Message
 from app.depression import calculate_depression_score
 from app.anxiety import calculate_anxiety_score
 from app.stress import calculate_stress_score
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
 app.secret_key = "MentalAssess"
+
+load_dotenv()
+
+app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
+app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', 587))
+app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'True') == 'True'
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
+
+mail = Mail(app)
 
 @app.route('/')
 def home():
@@ -61,6 +75,37 @@ def result():
         stress_level=stress_level,
         stress_score=stress_score,
     )
+
+@app.route('/send-email', methods=['POST'])
+def send_email():
+    email = request.form['email']
+    depression_level, depression_score = calculate_depression_score(session)
+    anxiety_level, anxiety_score = calculate_anxiety_score(session)
+    stress_level, stress_score = calculate_stress_score(session)
+
+    subject = "Your Mental Health Assessment Results"
+    body = f"""
+    Dear User,
+
+    Here are your assessment results:
+
+    - Depression: {depression_score}, {depression_level}
+    - Anxiety: {anxiety_score}, {anxiety_level}
+    - Stress: {stress_score}, {stress_level}
+
+    Thank you for using MentalAssess.
+
+    Best regards,
+    MentalAssess Team"""
+
+    try:
+        sender_email = ("MentalAssess Team", "no-reply@mentalassess.com")
+        msg = Message(subject, recipients=[email], body=body, sender=sender_email)
+        mail.send(msg)
+        return redirect(url_for('result', email_sent='success'))
+    except Exception as e:
+        print(f"Error sending email: {e}")
+        return redirect(url_for('result', email_sent='error'))
 
 if __name__ == "__main__":
     app.run(debug=True)
