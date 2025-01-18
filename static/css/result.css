@@ -1,0 +1,70 @@
+/* General styles for body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 20px;
+}
+
+.container {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    font-size: 1.1rem;
+}
+
+li {
+    margin: 10px 0;
+}
+
+strong {
+    color: #2c3e50;
+}
+
+.retake-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    border-radius: 4px;
+}
+
+.retake-link:hover {
+    background-color: #2980b9;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .retake-link {
+        font-size: 1rem;
+        padding: 12px 20px;
+    }
+}

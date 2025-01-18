@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MentalAssess - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>MentalAssess</h1>
+
+            <p>Welcome to the Depression, Anxiety, and Stress Diagnosis System.</p>
+            <p>This tool will guide you through a step-by-step diagnosis process.</p>
+            <p>Please note: This is not a substitute for professional medical advice.</p>
+        </header>
+        
+        <div class="action">
+            <a href="/depression">
+                <button class="start-btn">Start Diagnosis</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
