@@ -10,7 +10,7 @@ def calculate_stress_score(answers):
       (slot overwhelmed)
       (slot irritability)
       (slot tension)
-      (slot calm)
+      (slot cope)
       (slot forgetful)
       (slot sensitive)
    )
@@ -75,16 +75,16 @@ def calculate_stress_score(answers):
    )
    """)
 
-   # Do you felt difficult to keep yourself calm?
+   # Felt that you could NOT cope with all the things you had to do?
    env.build("""
-   (defrule check-calm
-      (symptoms (calm ?answer))
+   (defrule check-cope
+      (symptoms (cope ?answer))
       ?cf <- (cf-values (cf4 ?cf4))
-      (not (fired-rules (symptom "calm")))               ;; Ensure the rule only fires once
+      (not (fired-rules (symptom "cope")))               ;; Ensure the rule only fires once
       =>
       (bind ?cf-value (* (float ?answer) ?cf4))          ;; Multiply answer by CF value
       (modify ?cf (cf4 ?cf-value))
-      (assert (fired-rules (symptom "calm")))            ;; Mark as fired
+      (assert (fired-rules (symptom "cope")))            ;; Mark as fired
    )
    """)
 
