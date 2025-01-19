@@ -32,7 +32,7 @@ def calculate_stress_score(answers):
    env.build("""(deftemplate fired-rules (slot symptom))""")
 
    # Define the depression level template - store the severity level and combined CF values for return value
-   env.build("""(deftemplate stress-level (slot level) (slot cf-combined))""")
+   env.build("""(deftemplate stress-level (slot level) (slot cf-combine))""")
 
    env.assert_string("(cf-values)")
 
@@ -114,28 +114,29 @@ def calculate_stress_score(answers):
    )
    """)
 
+   # Combine the CF values to calculate the overall CF value
    env.build("""
-   (defrule final-check
+   (defrule calculate-cf-combine
       (cf-values (cf1 ?cf1) (cf2 ?cf2) (cf3 ?cf3) (cf4 ?cf4) (cf5 ?cf5) (cf6 ?cf6))
       =>
-      (bind ?cf-old1 (+ ?cf1 (* ?cf2 (- 1 ?cf1))))
-      (bind ?cf-old2 (+ ?cf-old1 (* ?cf3 (- 1 ?cf-old1))))
-      (bind ?cf-old3 (+ ?cf-old2 (* ?cf4 (- 1 ?cf-old2))))
-      (bind ?cf-old4 (+ ?cf-old3 (* ?cf5 (- 1 ?cf-old3))))
-      (bind ?cf-combined (+ ?cf-old4 (* ?cf6 (- 1 ?cf-old4))))
-      (if (<= ?cf-combined 0) then
-         (assert (stress-level (cf-combined ?cf-combined) (level "No Stress")))
+      (bind ?cf-combine-1 (+ ?cf1 (* ?cf2 (- 1 ?cf1))))
+      (bind ?cf-combine-2 (+ ?cf-combine-1 (* ?cf3 (- 1 ?cf-combine-1))))
+      (bind ?cf-combine-3 (+ ?cf-combine-2 (* ?cf4 (- 1 ?cf-combine-2))))
+      (bind ?cf-combine-4 (+ ?cf-combine-3 (* ?cf5 (- 1 ?cf-combine-3))))
+      (bind ?cf-combine-5 (+ ?cf-combine-4 (* ?cf6 (- 1 ?cf-combine-4))))
+      (if (<= ?cf-combine-5 0) then
+         (assert (stress-level (cf-combine ?cf-combine-5) (level "No Stress")))
       else
-         (if (<= ?cf-combined 0.25) then
-            (assert (stress-level (cf-combined ?cf-combined) (level "Mild Stress")))
+         (if (<= ?cf-combine-5 0.25) then
+            (assert (stress-level (cf-combine ?cf-combine-5) (level "Mild Stress")))
          else
-            (if (<= ?cf-combined 0.5) then
-               (assert (stress-level (cf-combined ?cf-combined) (level "Moderate Stress")))
+            (if (<= ?cf-combine-5 0.5) then
+               (assert (stress-level (cf-combine ?cf-combine-5) (level "Moderate Stress")))
             else
-               (if (<= ?cf-combined 0.75) then
-                  (assert (stress-level (cf-combined ?cf-combined) (level "Severe Stress")))
+               (if (<= ?cf-combine-5 0.75) then
+                  (assert (stress-level (cf-combine ?cf-combine-5) (level "Severe Stress")))
                else
-                  (assert (stress-level (cf-combined ?cf-combined) (level "Highly Severe Stress")))
+                  (assert (stress-level (cf-combine ?cf-combine-5) (level "Highly Severe Stress")))
                )
             )
          )
@@ -143,11 +144,12 @@ def calculate_stress_score(answers):
    )
    """)
 
+   # Return the severity level and certainty score in percentage
    env.build("""
    (defrule result
-      (stress-level (level ?level) (cf-combined ?cf-combined))
+      (stress-level (level ?level) (cf-combine ?cf-combine-5))
       =>
-      (bind ?percentage (* ?cf-combined 100))
+      (bind ?percentage (* ?cf-combine-5 100))
       (halt)
    )
    """)
@@ -156,7 +158,7 @@ def calculate_stress_score(answers):
                      f'(overwhelmed {float(answers.get("overwhelmed"))}) '
                      f'(irritability {float(answers.get("irritability"))}) '
                      f'(tension {float(answers.get("tension"))}) '
-                     f'(calm {float(answers.get("calm"))}) '
+                     f'(cope {float(answers.get("cope"))}) '
                      f'(forgetful {float(answers.get("forgetful"))}) '
                      f'(sensitive {float(answers.get("sensitive"))}))')
 
@@ -165,6 +167,6 @@ def calculate_stress_score(answers):
    for fact in env.facts():
       if fact.template.name == 'stress-level':
          severity_level = fact['level']
-         certainty_score = f"{(fact['cf-combined'] * 100):.2f}%"
+         certainty_score = f"{(fact['cf-combine'] * 100):.2f}%"
 
          return severity_level, certainty_score
