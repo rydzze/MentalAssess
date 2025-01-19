@@ -1,84 +1,93 @@
-/* General styles for body */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-    color: #333;
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #dfedff;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 775px;
+    width: 90%;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    margin: 50px 0;
 }
 
 h1 {
     text-align: center;
     color: #2c3e50;
-    margin-top: 20px;
-}
-
-.container {
-    width: 80%;
-    max-width: 600px;
-    margin: 20px auto;
-}
-
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
 }
 
 .question {
-    margin-bottom: 20px;
+    margin-top: 25px;
+    margin-bottom: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #ddd;
 }
 
-/* Styling for labels */
-label {
+.question:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.question-title {
     font-size: 1.2rem;
-    margin-bottom: 10px;
-    display: block;
     color: #2c3e50;
+    margin-bottom: 25px;
+    text-align: center;
 }
 
-/* Styling for radio buttons */
-input[type="radio"] {
-    margin: 10px 5px;
+.options {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-/* Button styling */
+.options label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: calc(15%);
+    margin: 5px;
+    font-size: 1rem;
+    color: #555;
+    cursor: pointer;
+}
+
+.options input[type="radio"] {
+    margin-bottom: 3px;
+}
+
 button {
-    background-color: #3498db;
+    background-color: #207AAA;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 20px;
     font-size: 1rem;
     border-radius: 4px;
     cursor: pointer;
+    width: 20%;
+    margin: 20px auto 0;  /* Centers the button horizontally */
     display: block;
-    width: 100%;
-    margin-top: 20px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #2980b9;
-}
-
-/* Add spacing between questions */
-br {
-    margin-bottom: 10px;
-}
-
-/* Responsive design for mobile */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    form {
-        padding: 15px;
-        width: 90%;
-    }
-
-    button {
-        font-size: 1rem;
-        padding: 12px 20px;
-    }
+    background-color: #1b5c80;
 }

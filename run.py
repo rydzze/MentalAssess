@@ -85,18 +85,24 @@ def send_email():
 
     subject = "Your Mental Health Assessment Results"
     body = f"""
-    Dear User,
+Dear User,
 
-    Here are your assessment results:
+Thank you for completing the MentalAssess self-test. Below are the results of your assessment:
 
-    - Depression: {depression_score}, {depression_level}
-    - Anxiety: {anxiety_score}, {anxiety_level}
-    - Stress: {stress_score}, {stress_level}
+- Depression: {depression_score} (Level: {depression_level})
+- Anxiety: {anxiety_score} (Level: {anxiety_level})
+- Stress: {stress_score} (Level: {stress_level})
 
-    Thank you for using MentalAssess.
+Please note that the results from this self-test are for informational purposes only. These results should not be used as a diagnostic tool or replace professional mental health evaluation. It is highly recommended to consult with a licensed healthcare provider for a comprehensive assessment and personalized advice.
 
-    Best regards,
-    MentalAssess Team"""
+If you have concerns about your mental health or are experiencing distress, please seek professional help immediately.
+
+Thank you for using MentalAssess. We are here to support your mental well-being!
+
+Best regards,
+MentalAssess Team
+
+Disclaimer: This is an automated email from MentalAssess. Please do not reply to this email as it is not monitored."""
 
     try:
         sender_email = ("MentalAssess Team", "no-reply@mentalassess.com")
@@ -108,4 +114,4 @@ def send_email():
         return redirect(url_for('result', email_sent='error'))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=988)
