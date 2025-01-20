@@ -38,7 +38,7 @@
         <form action="/send-email" method="POST" id="emailForm">
             <label for="email">Enter your email address to receive a copy of the results:</label>
             <input type="email" id="email" name="email" placeholder="your-email@example.com" required>
-            <button type="submit">Send My Results</button>
+            <button id="send" type="submit">Send My Results</button>
         </form>
 
         <a href="/" class="retake-link">Retake Assessment</a>

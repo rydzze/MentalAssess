@@ -83,7 +83,7 @@ button {
     border-radius: 4px;
     cursor: pointer;
     width: 20%;
-    margin: 20px auto 0;  /* Centers the button horizontally */
+    margin: 20px auto 0;
     display: block;
     transition: background-color 0.3s ease;
 }

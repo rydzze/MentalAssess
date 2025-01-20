@@ -24,7 +24,7 @@ app.config['MAIL_DEBUG'] = True
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.php')
 
 @app.route('/depression', methods=['GET', 'POST'])
 def depression():
@@ -36,7 +36,7 @@ def depression():
         session['behaviour'] = request.form.get('behaviour')
         session['emotion'] = request.form.get('emotion')
         return redirect(url_for('anxiety'))
-    return render_template('depression.html')
+    return render_template('depression.php')
 
 @app.route('/anxiety', methods=['GET', 'POST'])
 def anxiety():
@@ -48,7 +48,7 @@ def anxiety():
         session['overthinking'] = request.form.get('overthinking')
         session['shortbreath'] = request.form.get('shortbreath')
         return redirect(url_for('stress'))
-    return render_template('anxiety.html')
+    return render_template('anxiety.php')
 
 @app.route('/stress', methods=['GET', 'POST'])
 def stress():
@@ -60,7 +60,7 @@ def stress():
         session['forgetful'] = request.form.get('forgetful')
         session['sensitive'] = request.form.get('sensitive')
         return redirect(url_for('result'))
-    return render_template('stress.html')
+    return render_template('stress.php')
 
 @app.route('/result')
 def result():
@@ -69,7 +69,7 @@ def result():
     stress_level, stress_score = calculate_stress_score(session)
 
     return render_template(
-        'result.html',
+        'result.php',
         depression_level=depression_level,
         depression_score=depression_score,
         anxiety_level=anxiety_level,
